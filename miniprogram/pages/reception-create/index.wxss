@@ -1,0 +1,260 @@
+page {
+  background: #f4f7f8;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: calc(148rpx + env(safe-area-inset-bottom));
+}
+
+.topbar {
+  padding: 34rpx 28rpx 30rpx;
+  background: #185c5d;
+  color: #ffffff;
+}
+
+.topbar__meta {
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 24rpx;
+  line-height: 34rpx;
+}
+
+.topbar__title {
+  margin-top: 8rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+  line-height: 56rpx;
+}
+
+.topbar__summary {
+  margin-top: 26rpx;
+  display: grid;
+  grid-template-columns: 150rpx 120rpx 1fr;
+  gap: 14rpx;
+}
+
+.summary-item {
+  min-height: 112rpx;
+  padding: 18rpx;
+  border-radius: 16rpx;
+  background: rgba(255, 255, 255, 0.11);
+}
+
+.summary-item__label {
+  display: block;
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 22rpx;
+  line-height: 30rpx;
+}
+
+.summary-item__value {
+  display: block;
+  margin-top: 8rpx;
+  color: #ffffff;
+  font-size: 26rpx;
+  font-weight: 600;
+  line-height: 34rpx;
+  white-space: nowrap;
+}
+
+.summary-item__value--wrap {
+  white-space: normal;
+}
+
+.form {
+  padding: 24rpx;
+}
+
+.form-section {
+  margin-bottom: 22rpx;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+  box-shadow: 0 10rpx 24rpx rgba(31, 45, 45, 0.06);
+}
+
+.form-section__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22rpx;
+}
+
+.form-section__title {
+  color: #1f2d2d;
+  font-size: 32rpx;
+  font-weight: 700;
+  line-height: 44rpx;
+}
+
+.form-section__mark {
+  min-width: 72rpx;
+  height: 36rpx;
+  border-radius: 18rpx;
+  background: #fff2d7;
+  color: #9b6818;
+  font-size: 22rpx;
+  line-height: 36rpx;
+  text-align: center;
+}
+
+.field {
+  margin-top: 22rpx;
+}
+
+.field:first-child {
+  margin-top: 0;
+}
+
+.field-row {
+  display: flex;
+  gap: 18rpx;
+  margin-top: 22rpx;
+}
+
+.field-row:first-child {
+  margin-top: 0;
+}
+
+.field--half {
+  flex: 1;
+  min-width: 0;
+  margin-top: 0;
+}
+
+.field__label {
+  margin-bottom: 12rpx;
+  color: #627273;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 34rpx;
+}
+
+.segmented,
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14rpx;
+}
+
+.segment,
+.chip {
+  min-height: 64rpx;
+  padding: 0 22rpx;
+  border-radius: 32rpx;
+  background: #edf1f2;
+  color: #536364;
+  font-size: 26rpx;
+  line-height: 64rpx;
+  text-align: center;
+}
+
+.segment--active,
+.chip--active {
+  background: #185c5d;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.input,
+.picker,
+.textarea {
+  width: 100%;
+  border-radius: 12rpx;
+  background: #f7fafb;
+  color: #1f2d2d;
+  font-size: 28rpx;
+}
+
+.input,
+.picker {
+  height: 84rpx;
+  padding: 0 22rpx;
+  line-height: 84rpx;
+}
+
+.input__placeholder {
+  color: #a0acac;
+}
+
+.picker--select {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.picker__arrow {
+  color: #8a9899;
+  font-size: 36rpx;
+}
+
+.stepper {
+  height: 84rpx;
+  border-radius: 12rpx;
+  background: #f7fafb;
+  display: grid;
+  grid-template-columns: 72rpx 1fr 72rpx;
+  align-items: center;
+}
+
+.stepper__button {
+  width: 72rpx;
+  height: 84rpx;
+  color: #185c5d;
+  font-size: 36rpx;
+  font-weight: 700;
+  line-height: 84rpx;
+}
+
+.stepper__input {
+  width: 100%;
+  height: 84rpx;
+  color: #1f2d2d;
+  font-size: 28rpx;
+  font-weight: 700;
+  line-height: 84rpx;
+  text-align: center;
+}
+
+.textarea {
+  min-height: 180rpx;
+  padding: 18rpx 22rpx;
+  line-height: 40rpx;
+}
+
+.textarea--short {
+  min-height: 126rpx;
+}
+
+.footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  padding: 18rpx 24rpx calc(18rpx + env(safe-area-inset-bottom));
+  background: rgba(244, 247, 248, 0.96);
+  display: grid;
+  grid-template-columns: 210rpx 1fr;
+  gap: 18rpx;
+  box-shadow: 0 -10rpx 24rpx rgba(31, 45, 45, 0.08);
+}
+
+.footer__button {
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 88rpx;
+  text-align: center;
+}
+
+.footer__button--ghost {
+  background: #ffffff;
+  color: #185c5d;
+}
+
+.footer__button--primary {
+  background: #185c5d;
+  color: #ffffff;
+}

@@ -1,0 +1,201 @@
+<view class="page">
+  <view class="topbar">
+    <view class="topbar__meta">{{form.department}} · {{form.applicantName}}</view>
+    <view class="topbar__title">新建接待申请</view>
+    <view class="topbar__summary">
+      <view class="summary-item">
+        <text class="summary-item__label">类型</text>
+        <text class="summary-item__value">{{form.type}}</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-item__label">人数</text>
+        <text class="summary-item__value">{{form.visitorCount}}人</text>
+      </view>
+      <view class="summary-item">
+        <text class="summary-item__label">需求</text>
+        <text class="summary-item__value summary-item__value--wrap">{{selectedServicesText}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="form">
+    <view class="form-section">
+      <view class="form-section__head">
+        <view class="form-section__title">基础信息</view>
+        <view class="form-section__mark">必填</view>
+      </view>
+
+      <view class="field">
+        <view class="field__label">接待类型</view>
+        <view class="segmented">
+          <button
+            class="segment {{item.selected ? 'segment--active' : ''}}"
+            wx:for="{{typeItems}}"
+            wx:key="name"
+            data-value="{{item.name}}"
+            bindtap="onSelectType"
+          >
+            {{item.name}}
+          </button>
+        </view>
+      </view>
+
+      <view class="field">
+        <view class="field__label">接待主题</view>
+        <input
+          class="input"
+          value="{{form.title}}"
+          data-field="title"
+          bindinput="onInput"
+          placeholder="如：机构客户业务沟通会"
+          placeholder-class="input__placeholder"
+        />
+      </view>
+
+      <view class="field">
+        <view class="field__label">来访单位</view>
+        <input
+          class="input"
+          value="{{form.company}}"
+          data-field="company"
+          bindinput="onInput"
+          placeholder="请输入单位或团队名称"
+          placeholder-class="input__placeholder"
+        />
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-section__head">
+        <view class="form-section__title">来访安排</view>
+      </view>
+
+      <view class="field-row">
+        <view class="field field--half">
+          <view class="field__label">到访日期</view>
+          <picker mode="date" value="{{form.visitDate}}" start="{{minDate}}" bindchange="onDateChange">
+            <view class="picker">{{form.visitDate}}</view>
+          </picker>
+        </view>
+        <view class="field field--half">
+          <view class="field__label">来访人数</view>
+          <view class="stepper">
+            <button class="stepper__button" data-delta="-1" bindtap="onStepVisitor">-</button>
+            <input
+              class="stepper__input"
+              type="number"
+              value="{{form.visitorCount}}"
+              bindinput="onVisitorInput"
+            />
+            <button class="stepper__button" data-delta="1" bindtap="onStepVisitor">+</button>
+          </view>
+        </view>
+      </view>
+
+      <view class="field-row">
+        <view class="field field--half">
+          <view class="field__label">开始时间</view>
+          <picker mode="time" value="{{form.startTime}}" data-field="startTime" bindchange="onTimeChange">
+            <view class="picker">{{form.startTime}}</view>
+          </picker>
+        </view>
+        <view class="field field--half">
+          <view class="field__label">结束时间</view>
+          <picker mode="time" value="{{form.endTime}}" data-field="endTime" bindchange="onTimeChange">
+            <view class="picker">{{form.endTime}}</view>
+          </picker>
+        </view>
+      </view>
+
+      <view class="field">
+        <view class="field__label">接待地点</view>
+        <picker value="{{placeIndex}}" range="{{placeOptions}}" bindchange="onPlaceChange">
+          <view class="picker picker--select">
+            <text>{{form.place}}</text>
+            <text class="picker__arrow">›</text>
+          </view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-section__head">
+        <view class="form-section__title">联系人</view>
+      </view>
+
+      <view class="field-row">
+        <view class="field field--half">
+          <view class="field__label">来访联系人</view>
+          <input
+            class="input"
+            value="{{form.contactName}}"
+            data-field="contactName"
+            bindinput="onInput"
+            placeholder="姓名"
+            placeholder-class="input__placeholder"
+          />
+        </view>
+        <view class="field field--half">
+          <view class="field__label">联系电话</view>
+          <input
+            class="input"
+            type="number"
+            maxlength="11"
+            value="{{form.contactPhone}}"
+            data-field="contactPhone"
+            bindinput="onInput"
+            placeholder="手机号"
+            placeholder-class="input__placeholder"
+          />
+        </view>
+      </view>
+    </view>
+
+    <view class="form-section">
+      <view class="form-section__head">
+        <view class="form-section__title">会务需求</view>
+      </view>
+
+      <view class="chips">
+        <button
+          class="chip {{item.selected ? 'chip--active' : ''}}"
+          wx:for="{{serviceItems}}"
+          wx:key="name"
+          data-value="{{item.name}}"
+          bindtap="onToggleService"
+        >
+          {{item.name}}
+        </button>
+      </view>
+
+      <view class="field">
+        <view class="field__label">车牌信息</view>
+        <textarea
+          class="textarea textarea--short"
+          value="{{form.vehicles}}"
+          data-field="vehicles"
+          bindinput="onInput"
+          placeholder="可填写车牌、车型、司机电话"
+          placeholder-class="input__placeholder"
+        />
+      </view>
+
+      <view class="field">
+        <view class="field__label">备注需求</view>
+        <textarea
+          class="textarea"
+          value="{{form.notes}}"
+          data-field="notes"
+          bindinput="onInput"
+          placeholder="如桌签、茶歇、投屏、用餐标准等"
+          placeholder-class="input__placeholder"
+        />
+      </view>
+    </view>
+  </view>
+
+  <view class="footer">
+    <button class="footer__button footer__button--ghost" bindtap="onSaveDraft">暂存</button>
+    <button class="footer__button footer__button--primary" loading="{{isSubmitting}}" bindtap="onSubmit">提交申请</button>
+  </view>
+</view>

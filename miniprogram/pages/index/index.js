@@ -126,8 +126,14 @@ Page({
 
   onTapQuickAction(e) {
     const { type } = e.currentTarget.dataset;
+    if (type === "create") {
+      wx.navigateTo({
+        url: "/pages/reception-create/index",
+      });
+      return;
+    }
+
     const actionMap = {
-      create: "新建接待表单将在下一步开发",
       today: "今日接待列表将在下一步开发",
       vehicle: "车辆登记页面将在下一步开发",
       approval: "审批中心将在下一步开发",

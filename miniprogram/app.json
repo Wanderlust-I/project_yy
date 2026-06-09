@@ -1,6 +1,7 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/reception-create/index"
   ],
   "window": {
     "backgroundColor": "#F4F7F8",
@@ -9,7 +10,6 @@
     "navigationBarTitleText": "接待管理",
     "navigationBarTextStyle": "white"
   },
-  "sitemapLocation": "sitemap.json",
   "style": "v2",
   "lazyCodeLoading": "requiredComponents"
 }
