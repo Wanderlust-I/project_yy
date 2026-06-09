@@ -1,14 +1,13 @@
 {
   "pages": [
-    "pages/index/index",
-    "pages/example/index"
+    "pages/index/index"
   ],
   "window": {
-    "backgroundColor": "#F6F6F6",
+    "backgroundColor": "#F4F7F8",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#185C5D",
+    "navigationBarTitleText": "接待管理",
+    "navigationBarTextStyle": "white"
   },
   "sitemapLocation": "sitemap.json",
   "style": "v2",

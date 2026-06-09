@@ -1,185 +1,168 @@
-// index.js
 Page({
   data: {
-    showTip: false,
-    powerList: [
+    user: {
+      name: "万峻",
+      department: "投行一部",
+      role: "申请人",
+    },
+    avatarText: "万",
+    today: "4月21日 周二",
+    stats: [
       {
-        title: "云托管",
-        tip: "不限语言的全托管容器服务",
-        showItem: false,
-        item: [
-          {
-            type: "cloudbaserun",
-            title: "云托管调用",
-          },
-        ],
+        label: "今日接待",
+        value: "3",
+        unit: "场",
+        note: "1场待确认",
+        theme: "primary",
       },
       {
-        title: "云函数",
-        tip: "安全、免鉴权运行业务代码",
-        showItem: false,
-        item: [
-          {
-            type: "getOpenId",
-            title: "获取OpenId",
-          },
-          {
-            type: "getMiniProgramCode",
-            title: "生成小程序码",
-          },
-        ],
+        label: "待我审批",
+        value: "2",
+        unit: "项",
+        note: "最晚今日处理",
+        theme: "amber",
       },
       {
-        title: "数据库",
-        tip: "安全稳定的文档型数据库",
-        showItem: false,
-        item: [
-          {
-            type: "createCollection",
-            title: "创建集合",
-          },
-          {
-            type: "selectRecord",
-            title: "增删改查记录",
-          },
-          // {
-          //   title: '聚合操作',
-          //   page: 'sumRecord',
-          // },
-        ],
+        label: "车辆登记",
+        value: "5",
+        unit: "辆",
+        note: "2辆未到达",
+        theme: "coral",
       },
       {
-        title: "云存储",
-        tip: "自带CDN加速文件存储",
-        showItem: false,
-        item: [
-          {
-            type: "uploadFile",
-            title: "上传文件",
-          },
-        ],
-      },
-      {
-        title: "AI 接入能力",
-        tip: "云开发 AI 接入能力",
-        showItem: false,
-        item: [
-          {
-            type: "model-guide",
-            title: "大模型对话指引",
-          },
-        ],
-      },
-      {
-        title: "AI 智能开发小程序",
-        tip: "连接 AI 开发工具与 MCP 开发小程序",
-        type: "ai-assistant",
-        skipEnvCheck: true,
-        showItem: false,
-        item: [],
+        label: "本周归档",
+        value: "8",
+        unit: "单",
+        note: "费用待补2单",
+        theme: "slate",
       },
     ],
-    haveCreateCollection: false,
-    title: "",
-    content: "",
+    quickActions: [
+      {
+        title: "新建接待",
+        desc: "发起申请",
+        icon: "add",
+        type: "create",
+      },
+      {
+        title: "今日接待",
+        desc: "查看安排",
+        icon: "calendar",
+        type: "today",
+      },
+      {
+        title: "车辆登记",
+        desc: "门岗放行",
+        icon: "car",
+        type: "vehicle",
+      },
+      {
+        title: "待我审批",
+        desc: "处理流程",
+        icon: "check",
+        type: "approval",
+      },
+    ],
+    schedules: [
+      {
+        time: "10:30",
+        title: "省海港集团领导来访交流",
+        place: "浙商证券总部 1702会议室",
+        people: "约4人",
+        status: "待会场确认",
+        statusType: "warning",
+      },
+      {
+        time: "14:00",
+        title: "机构客户业务沟通会",
+        place: "16楼第一会议室",
+        people: "6人",
+        status: "执行中",
+        statusType: "active",
+      },
+      {
+        time: "16:30",
+        title: "投行项目材料交流",
+        place: "线上会议",
+        people: "3人",
+        status: "已安排",
+        statusType: "done",
+      },
+    ],
+    todos: [
+      {
+        title: "确认1702会议室电子屏内容",
+        owner: "会务",
+        due: "09:30前",
+      },
+      {
+        title: "补充来访车牌登记",
+        owner: "申请人",
+        due: "接待前",
+      },
+      {
+        title: "同步桌签与茶水需求",
+        owner: "行政",
+        due: "今日",
+      },
+    ],
+    vehicleNotice: {
+      count: 2,
+      text: "浙B车辆待补充车牌，门岗暂未放行",
+      action: "去登记",
+    },
   },
-  onClickPowerInfo(e) {
+
+  onLoad() {
     const app = getApp();
-    const index = e.currentTarget.dataset.index;
-    const powerList = this.data.powerList;
-    const selectedItem = powerList[index];
-    
-    // 检查是否跳过环境配置检测
-    if (!selectedItem.skipEnvCheck && !app.globalData.env) {
-      wx.showModal({
-        title: "提示",
-        content: "请在 `miniprogram/app.js` 中正确配置 `env` 参数",
-      });
-      return;
-    }
-    if (selectedItem.link) {
-      wx.navigateTo({
-        url: `../web/index?url=${selectedItem.link}&title=${selectedItem.title}`,
-      });
-    } else if (selectedItem.type) {
-      wx.navigateTo({
-        url: `/pages/example/index?envId=${this.data.selectedEnv?.envId}&type=${selectedItem.type}`,
-      });
-    } else if (selectedItem.page) {
-      wx.navigateTo({
-        url: `/pages/${selectedItem.page}/index`,
-      });
-    } else if (
-      selectedItem.title === "数据库" &&
-      !this.data.haveCreateCollection
-    ) {
-      this.onClickDatabase(powerList, selectedItem);
-    } else {
-      selectedItem.showItem = !selectedItem.showItem;
+    if (app.globalData && app.globalData.currentUser) {
+      const { currentUser } = app.globalData;
       this.setData({
-        powerList,
+        user: currentUser,
+        avatarText: currentUser.name ? currentUser.name.slice(0, 1) : "",
       });
     }
   },
 
-  jumpPage(e) {
-    const { type, page } = e.currentTarget.dataset;
-    console.log("jump page", type, page);
-    if (type) {
-      wx.navigateTo({
-        url: `/pages/example/index?envId=${this.data.selectedEnv?.envId}&type=${type}`,
-      });
-    } else {
-      wx.navigateTo({
-        url: `/pages/${page}/index?envId=${this.data.selectedEnv?.envId}`,
-      });
-    }
-  },
+  onTapQuickAction(e) {
+    const { type } = e.currentTarget.dataset;
+    const actionMap = {
+      create: "新建接待表单将在下一步开发",
+      today: "今日接待列表将在下一步开发",
+      vehicle: "车辆登记页面将在下一步开发",
+      approval: "审批中心将在下一步开发",
+    };
 
-  onClickDatabase(powerList, selectedItem) {
-    wx.showLoading({
-      title: "",
+    wx.showToast({
+      title: actionMap[type] || "功能建设中",
+      icon: "none",
     });
-    wx.cloud
-      .callFunction({
-        name: "quickstartFunctions",
-        data: {
-          type: "createCollection",
-        },
-      })
-      .then((resp) => {
-        if (resp.result.success) {
-          this.setData({
-            haveCreateCollection: true,
-          });
-        }
-        selectedItem.showItem = !selectedItem.showItem;
-        this.setData({
-          powerList,
-        });
-        wx.hideLoading();
-      })
-      .catch((e) => {
-        wx.hideLoading();
-        const { errCode, errMsg } = e;
-        if (errMsg.includes("Environment not found")) {
-          this.setData({
-            showTip: true,
-            title: "云开发环境未找到",
-            content:
-              "如果已经开通云开发，请检查环境ID与 `miniprogram/app.js` 中的 `env` 参数是否一致。",
-          });
-          return;
-        }
-        if (errMsg.includes("FunctionName parameter could not be found")) {
-          this.setData({
-            showTip: true,
-            title: "请上传云函数",
-            content:
-              "在'cloudfunctions/quickstartFunctions'目录右键，选择【上传并部署-云端安装依赖】，等待云函数上传完成后重试。",
-          });
-          return;
-        }
-      });
+  },
+
+  onTapSchedule(e) {
+    const { index } = e.currentTarget.dataset;
+    const item = this.data.schedules[index];
+
+    wx.showToast({
+      title: item.title,
+      icon: "none",
+    });
+  },
+
+  onTapTodo(e) {
+    const { index } = e.currentTarget.dataset;
+    const item = this.data.todos[index];
+
+    wx.showToast({
+      title: item.title,
+      icon: "none",
+    });
+  },
+
+  onTapVehicleNotice() {
+    wx.showToast({
+      title: "车辆登记页面将在下一步开发",
+      icon: "none",
+    });
   },
 });

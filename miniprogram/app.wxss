@@ -1,27 +1,26 @@
-/**app.wxss**/
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  box-sizing: border-box;
-} 
-
-button {
-  background: initial;
-}
-
-button:focus{
-  outline: 0;
-}
-
-button::after{
-  border: none;
-}
-
-
 page {
-  background: #f6f6f6;
+  background: #f4f7f8;
+  color: #1f2d2d;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+}
+
+view,
+text,
+button,
+input,
+textarea {
+  box-sizing: border-box;
+}
+
+button {
+  background: transparent;
+  padding: 0;
+  line-height: 1;
+}
+
+button::after {
+  border: none;
 }
