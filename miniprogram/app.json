@@ -1,7 +1,8 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/reception-create/index"
+    "pages/reception-create/index",
+    "pages/user/index"
   ],
   "window": {
     "backgroundColor": "#F4F7F8",
@@ -9,6 +10,32 @@
     "navigationBarBackgroundColor": "#185C5D",
     "navigationBarTitleText": "接待管理",
     "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#7A8889",
+    "selectedColor": "#185C5D",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "icon/index.png",
+        "selectedIconPath": "icon/index.png"
+      },
+      {
+        "pagePath": "pages/reception-create/index",
+        "text": "接待申请",
+        "iconPath": "icon/create.png",
+        "selectedIconPath": "icon/create.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "icon/my.png",
+        "selectedIconPath": "icon/my.png"
+      }
+    ]
   },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents"

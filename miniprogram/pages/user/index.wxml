@@ -1,0 +1,111 @@
+<view class="page">
+  <view class="hero">
+    <view class="hero__top">
+      <view>
+        <view class="hero__eyebrow">{{user.department}} · {{user.role}}</view>
+        <view class="hero__title">接待工作台</view>
+      </view>
+      <view class="profile">
+        <view class="profile__avatar">{{avatarText}}</view>
+        <view class="profile__name">{{user.name}}</view>
+      </view>
+    </view>
+
+    <view class="hero__summary">
+      <view>
+        <view class="summary__label">今日安排</view>
+        <view class="summary__value">{{today}}</view>
+      </view>
+      <button class="summary__button" bindtap="onTapQuickAction" data-type="create">新建</button>
+    </view>
+  </view>
+
+  <view class="stats">
+    <view class="stat stat--{{item.theme}}" wx:for="{{stats}}" wx:key="label">
+      <view class="stat__label">{{item.label}}</view>
+      <view class="stat__main">
+        <text class="stat__value">{{item.value}}</text>
+        <text class="stat__unit">{{item.unit}}</text>
+      </view>
+      <view class="stat__note">{{item.note}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="section__head">
+      <view class="section__title">快捷入口</view>
+      <view class="section__extra">常用流程</view>
+    </view>
+    <view class="actions">
+      <button
+        class="action"
+        wx:for="{{quickActions}}"
+        wx:key="type"
+        bindtap="onTapQuickAction"
+        data-type="{{item.type}}"
+      >
+        <view class="action__icon action__icon--{{item.icon}}">
+          <view class="icon-shape"></view>
+        </view>
+        <view class="action__text">
+          <view class="action__title">{{item.title}}</view>
+          <view class="action__desc">{{item.desc}}</view>
+        </view>
+      </button>
+    </view>
+  </view>
+
+  <view class="notice" bindtap="onTapVehicleNotice">
+    <view class="notice__badge">{{vehicleNotice.count}}</view>
+    <view class="notice__content">
+      <view class="notice__title">车辆提醒</view>
+      <view class="notice__text">{{vehicleNotice.text}}</view>
+    </view>
+    <view class="notice__action">{{vehicleNotice.action}}</view>
+  </view>
+
+  <view class="section">
+    <view class="section__head">
+      <view class="section__title">今日接待</view>
+      <view class="section__extra">按时间排序</view>
+    </view>
+    <view class="schedule">
+      <view
+        class="schedule__item"
+        wx:for="{{schedules}}"
+        wx:key="time"
+        bindtap="onTapSchedule"
+        data-index="{{index}}"
+      >
+        <view class="schedule__time">{{item.time}}</view>
+        <view class="schedule__body">
+          <view class="schedule__title">{{item.title}}</view>
+          <view class="schedule__meta">{{item.place}} · {{item.people}}</view>
+        </view>
+        <view class="tag tag--{{item.statusType}}">{{item.status}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="section section--last">
+    <view class="section__head">
+      <view class="section__title">待办事项</view>
+      <view class="section__extra">需跟进</view>
+    </view>
+    <view class="todo">
+      <view
+        class="todo__item"
+        wx:for="{{todos}}"
+        wx:key="title"
+        bindtap="onTapTodo"
+        data-index="{{index}}"
+      >
+        <view class="todo__check"></view>
+        <view class="todo__body">
+          <view class="todo__title">{{item.title}}</view>
+          <view class="todo__meta">{{item.owner}} · {{item.due}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
