@@ -1,0 +1,132 @@
+page {
+  background: #eef4f4;
+}
+
+.page {
+  min-height: 100vh;
+  padding-bottom: calc(48rpx + env(safe-area-inset-bottom));
+}
+
+.hero {
+  min-height: 520rpx;
+  padding: 56rpx 34rpx 64rpx;
+  background: #185c5d;
+  color: #ffffff;
+  border-bottom-left-radius: 34rpx;
+  border-bottom-right-radius: 34rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+}
+
+.brand__mark {
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 20rpx;
+  background: #f5c56d;
+  color: #183b3b;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 76rpx;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.brand__name {
+  color: #ffffff;
+  font-size: 34rpx;
+  font-weight: 700;
+  line-height: 46rpx;
+}
+
+.brand__meta {
+  margin-top: 4rpx;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 24rpx;
+  line-height: 34rpx;
+}
+
+.hero__title {
+  margin-top: 120rpx;
+  color: #ffffff;
+  font-size: 52rpx;
+  font-weight: 700;
+  line-height: 68rpx;
+}
+
+.hero__subtitle {
+  margin-top: 18rpx;
+  max-width: 620rpx;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 27rpx;
+  line-height: 42rpx;
+}
+
+.login-panel {
+  margin: -42rpx 28rpx 0;
+  padding: 30rpx;
+  border-radius: 18rpx;
+  background: #ffffff;
+  box-shadow: 0 16rpx 42rpx rgba(31, 45, 45, 0.1);
+}
+
+.env {
+  padding: 22rpx 24rpx;
+  border-radius: 14rpx;
+  background: #f7fafb;
+}
+
+.env__label {
+  color: #7a8889;
+  font-size: 23rpx;
+  line-height: 32rpx;
+}
+
+.env__value {
+  margin-top: 8rpx;
+  color: #1f2d2d;
+  font-size: 25rpx;
+  line-height: 36rpx;
+  word-break: break-all;
+}
+
+.login-button {
+  margin-top: 28rpx;
+  width: 100%;
+  height: 88rpx;
+  border-radius: 18rpx;
+  background: #185c5d;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 88rpx;
+  text-align: center;
+}
+
+.tips {
+  margin-top: 24rpx;
+  display: flex;
+  align-items: flex-start;
+  gap: 12rpx;
+}
+
+.tips__dot {
+  width: 12rpx;
+  height: 12rpx;
+  margin-top: 13rpx;
+  border-radius: 50%;
+  background: #b7812d;
+  flex-shrink: 0;
+}
+
+.tips__text {
+  color: #7a8889;
+  font-size: 24rpx;
+  line-height: 38rpx;
+}

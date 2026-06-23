@@ -1,11 +1,12 @@
 Page({
   data: {
     user: {
-      name: "万峻",
-      department: "投行一部",
+      name: "",
+      department: "",
       role: "申请人",
     },
-    avatarText: "万",
+    avatarText: "",
+    avatarUrl: "",
     today: "4月21日 周二",
     stats: [
       {
@@ -114,14 +115,26 @@ Page({
   },
 
   onLoad() {
+    this.syncCurrentUser();
+  },
+
+  onShow() {
+    this.syncCurrentUser();
+  },
+
+  syncCurrentUser() {
     const app = getApp();
-    if (app.globalData && app.globalData.currentUser) {
-      const { currentUser } = app.globalData;
-      this.setData({
-        user: currentUser,
-        avatarText: currentUser.name ? currentUser.name.slice(0, 1) : "",
-      });
+
+    if (!app.ensureLogin()) {
+      return;
     }
+
+    const { currentUser } = app.globalData;
+    this.setData({
+      user: currentUser,
+      avatarText: currentUser.name ? currentUser.name.slice(0, 1) : "",
+      avatarUrl: currentUser.avatarUrl || "",
+    });
   },
 
   onTapQuickAction(e) {

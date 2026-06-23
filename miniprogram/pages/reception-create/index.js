@@ -62,6 +62,10 @@ Page({
 
   onLoad() {
     const app = getApp();
+    if (!app.ensureLogin()) {
+      return;
+    }
+
     const currentUser = (app.globalData && app.globalData.currentUser) || {};
     const form = createInitialForm(currentUser);
     this.setData({

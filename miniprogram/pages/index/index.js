@@ -109,7 +109,17 @@ Page({
   },
 
   onLoad() {
+    const app = getApp();
+    if (!app.ensureLogin()) {
+      return;
+    }
+
     this.updateVisibleActivities();
+  },
+
+  onShow() {
+    const app = getApp();
+    app.ensureLogin();
   },
 
   onSelectFilter(e) {

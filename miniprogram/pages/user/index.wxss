@@ -53,6 +53,11 @@ page {
   font-weight: 700;
   line-height: 56rpx;
   text-align: center;
+  overflow: hidden;
+}
+
+.profile__avatar--image {
+  display: block;
 }
 
 .profile__name {

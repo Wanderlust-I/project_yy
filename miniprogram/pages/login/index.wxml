@@ -1,0 +1,30 @@
+<view class="page">
+  <view class="hero">
+    <view class="brand">
+      <view class="brand__mark">接</view>
+      <view>
+        <view class="brand__name">{{appName}}</view>
+        <view class="brand__meta">微信授权登录</view>
+      </view>
+    </view>
+
+    <view class="hero__title">进入接待工作台</view>
+    <view class="hero__subtitle">使用微信身份完成登录后继续处理接待申请、排期与会务事项。</view>
+  </view>
+
+  <view class="login-panel">
+    <view class="env">
+      <view class="env__label">云环境</view>
+      <view class="env__value">{{envId}}</view>
+    </view>
+
+    <button class="login-button" loading="{{isLoggingIn}}" bindtap="onTapLogin">
+      微信授权登录
+    </button>
+
+    <view class="tips">
+      <view class="tips__dot"></view>
+      <view class="tips__text">授权信息仅用于当前小程序识别登录状态。</view>
+    </view>
+  </view>
+</view>
