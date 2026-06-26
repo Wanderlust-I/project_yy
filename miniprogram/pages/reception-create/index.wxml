@@ -250,16 +250,42 @@
         </button>
       </view>
 
-      <view class="field">
-        <view class="field__label">车牌信息</view>
-        <textarea
-          class="textarea textarea--short"
-          value="{{form.vehicles}}"
-          data-field="vehicles"
-          bindinput="onInput"
-          placeholder="可填写车牌、车型、司机电话"
-          placeholder-class="input__placeholder"
-        />
+      <view class="personnel-group" wx:if="{{showVehicleSection}}">
+        <view class="personnel-group__header">
+          <view class="personnel-group__title">车辆信息</view>
+          <view class="personnel-add" bindtap="onAddVehicle">
+            <text class="personnel-add__icon">+</text>
+            <text class="personnel-add__text">添加</text>
+          </view>
+        </view>
+        <view class="personnel-list">
+          <view class="personnel-item" wx:for="{{form.vehicles}}" wx:key="index">
+            <view class="personnel-item__fields">
+              <input
+                class="input personnel-item__input"
+                value="{{item.plate}}"
+                data-index="{{index}}"
+                data-field="plate"
+                bindinput="onVehicleInput"
+                placeholder="车牌号"
+                placeholder-class="input__placeholder"
+              />
+              <input
+                class="input personnel-item__input"
+                value="{{item.driverPhone}}"
+                data-index="{{index}}"
+                data-field="driverPhone"
+                bindinput="onVehicleInput"
+                placeholder="司机电话"
+                placeholder-class="input__placeholder"
+                type="number"
+                maxlength="11"
+              />
+            </view>
+            <view class="personnel-item__remove" data-index="{{index}}" bindtap="onRemoveVehicle">删除</view>
+          </view>
+          <view class="personnel-empty" wx:if="{{form.vehicles.length === 0}}">暂无车辆信息，点击上方添加</view>
+        </view>
       </view>
 
       <view class="field">

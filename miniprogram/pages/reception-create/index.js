@@ -32,7 +32,7 @@ function createInitialForm(user) {
     visitors: [],
     services: defaultServices.slice(),
     notes: "",
-    vehicles: "",
+    vehicles: [],
   };
 }
 
@@ -59,6 +59,7 @@ Page({
     minDate: formatDate(new Date()),
     form: createInitialForm({}),
     selectedServicesText: "会议室、茶水",
+    showVehicleSection: false,
     isSubmitting: false,
   },
 
@@ -135,6 +136,26 @@ Page({
     });
   },
 
+  onAddVehicle() {
+    const list = this.data.form.vehicles.slice();
+    list.push({ plate: "", driverPhone: "" });
+    this.setFormField("vehicles", list);
+  },
+
+  onRemoveVehicle(e) {
+    const { index } = e.currentTarget.dataset;
+    const list = this.data.form.vehicles.slice();
+    list.splice(index, 1);
+    this.setFormField("vehicles", list);
+  },
+
+  onVehicleInput(e) {
+    const { index, field } = e.currentTarget.dataset;
+    this.setData({
+      [`form.vehicles[${index}].${field}`]: e.detail.value,
+    });
+  },
+
   onToggleService(e) {
     const value = e.currentTarget.dataset.value;
     const services = this.data.form.services.slice();
@@ -156,6 +177,7 @@ Page({
     this.setData({
       serviceItems: buildServiceItems(services),
       selectedServicesText: services.length ? services.join("、") : "暂无会务需求",
+      showVehicleSection: services.indexOf("车辆") > -1,
     });
   },
 
