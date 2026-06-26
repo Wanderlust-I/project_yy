@@ -32,7 +32,8 @@ function createInitialForm(user) {
     visitors: [],
     services: defaultServices.slice(),
     notes: "",
-    vehicles: [],
+    vehicleApply: [],
+    vehicleRegister: [],
   };
 }
 
@@ -136,23 +137,24 @@ Page({
     });
   },
 
-  onAddVehicle() {
-    const list = this.data.form.vehicles.slice();
+  onAddVehicle(e) {
+    const { vehicletype } = e.currentTarget.dataset;
+    const list = this.data.form[vehicletype].slice();
     list.push({ plate: "", driverPhone: "" });
-    this.setFormField("vehicles", list);
+    this.setFormField(vehicletype, list);
   },
 
   onRemoveVehicle(e) {
-    const { index } = e.currentTarget.dataset;
-    const list = this.data.form.vehicles.slice();
+    const { vehicletype, index } = e.currentTarget.dataset;
+    const list = this.data.form[vehicletype].slice();
     list.splice(index, 1);
-    this.setFormField("vehicles", list);
+    this.setFormField(vehicletype, list);
   },
 
   onVehicleInput(e) {
-    const { index, field } = e.currentTarget.dataset;
+    const { vehicletype, index, field } = e.currentTarget.dataset;
     this.setData({
-      [`form.vehicles[${index}].${field}`]: e.detail.value,
+      [`form.${vehicletype}[${index}].${field}`]: e.detail.value,
     });
   },
 
