@@ -1,7 +1,7 @@
 const typeOptions = ["商务接待", "项目沟通", "调研交流", "内部协同"];
 const serviceOptions = ["会议室", "茶水", "桌签", "用餐", "车辆", "投影"];
-const placeOptions = ["总部会议室", "16楼第一会议室", "17楼贵宾室", "线上会议"];
-const defaultServices = ["会议室", "茶水"];
+const placeOptions = ["3911会议室", "线上会议"];
+ const defaultServices = ["会议室","茶水"];
 
 function padNumber(value) {
   return value < 10 ? `0${value}` : `${value}`;
@@ -28,6 +28,8 @@ function createInitialForm(user) {
     endTime: "10:30",
     place: placeOptions[0],
     visitorCount: 1,
+    staff: [],
+    visitors: [],
     services: defaultServices.slice(),
     notes: "",
     vehicles: "",
@@ -112,15 +114,25 @@ Page({
     this.setFormField(field, e.detail.value);
   },
 
-  onStepVisitor(e) {
-    const delta = Number(e.currentTarget.dataset.delta);
-    const nextCount = Math.max(1, Math.min(99, this.data.form.visitorCount + delta));
-    this.setFormField("visitorCount", nextCount);
+  onAddPerson(e) {
+    const { type } = e.currentTarget.dataset;
+    const list = this.data.form[type].slice();
+    list.push({ name: "", position: "" });
+    this.setFormField(type, list);
   },
 
-  onVisitorInput(e) {
-    const value = Number(e.detail.value);
-    this.setFormField("visitorCount", value > 0 ? Math.min(99, value) : 1);
+  onRemovePerson(e) {
+    const { type, index } = e.currentTarget.dataset;
+    const list = this.data.form[type].slice();
+    list.splice(index, 1);
+    this.setFormField(type, list);
+  },
+
+  onPersonInput(e) {
+    const { type, index, field } = e.currentTarget.dataset;
+    this.setData({
+      [`form.${type}[${index}].${field}`]: e.detail.value,
+    });
   },
 
   onToggleService(e) {
