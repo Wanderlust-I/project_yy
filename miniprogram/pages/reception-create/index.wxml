@@ -273,7 +273,7 @@
                   data-index="{{index}}"
                   data-field="plate"
                   bindinput="onVehicleInput"
-                  placeholder="车牌号"
+                  placeholder="车型"
                   placeholder-class="input__placeholder"
                 />
                 <input
@@ -283,7 +283,7 @@
                   data-index="{{index}}"
                   data-field="driverPhone"
                   bindinput="onVehicleInput"
-                  placeholder="司机电话"
+                  placeholder="数量"
                   placeholder-class="input__placeholder"
                   type="number"
                   maxlength="11"
