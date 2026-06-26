@@ -227,8 +227,14 @@ Page({
   },
 
   buildPayload(status) {
+    const form = this.data.form;
+    const hasVehicleService = form.services.indexOf("车辆") > -1;
+
     return {
-      ...this.data.form,
+      ...form,
+      visitorCount: Number(form.visitorCount) || 1,
+      vehicleApply: hasVehicleService ? form.vehicleApply : [],
+      vehicleRegister: hasVehicleService ? form.vehicleRegister : [],
       status,
       updatedAt: new Date().toISOString(),
     };
@@ -243,22 +249,67 @@ Page({
   },
 
   onSubmit() {
+    if (this.data.isSubmitting) {
+      return;
+    }
+
     if (!this.validateForm()) {
       return;
     }
+
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      wx.showToast({
+        title: "请启用云开发",
+        icon: "none",
+      });
+      return;
+    }
+
+    const payload = this.buildPayload("pending");
 
     this.setData({
       isSubmitting: true,
     });
 
-    wx.setStorageSync("latestReceptionApplication", this.buildPayload("pending"));
-    wx.showToast({
-      title: "申请已提交",
-      icon: "success",
-    });
+    wx.cloud.callFunction({
+      name: "createReception",
+      data: {
+        reception: payload,
+      },
+      success: (res) => {
+        const result = (res && res.result) || {};
 
-    this.setData({
-      isSubmitting: false,
+        if (!result.success) {
+          wx.showToast({
+            title: result.message || "提交失败",
+            icon: "none",
+          });
+          return;
+        }
+
+        wx.setStorageSync("latestReceptionApplication", {
+          ...payload,
+          _id: result.id,
+        });
+        wx.removeStorageSync("receptionApplicationDraft");
+
+        wx.showToast({
+          title: "申请已提交",
+          icon: "success",
+        });
+      },
+      fail: (err) => {
+        console.error("createReception failed", err);
+        wx.showToast({
+          title: "提交失败，请重试",
+          icon: "none",
+        });
+      },
+      complete: () => {
+        this.setData({
+          isSubmitting: false,
+        });
+      },
     });
   },
 });
