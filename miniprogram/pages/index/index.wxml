@@ -52,7 +52,14 @@
         <view class="section__count">{{visibleCount}}场</view>
       </view>
 
-      <view class="timeline">
+      <view class="state" wx:if="{{isLoading && activities.length === 0}}">加载正式接待...</view>
+
+      <view class="state" wx:elif="{{visibleActivities.length === 0}}">
+        <view class="state__title">暂无正式接待</view>
+        <view class="state__text">{{emptyText}}</view>
+      </view>
+
+      <view class="timeline" wx:else>
         <view
           class="activity"
           wx:for="{{visibleActivities}}"

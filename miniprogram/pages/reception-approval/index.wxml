@@ -1,0 +1,105 @@
+<view class="page">
+  <view class="topbar">
+    <view class="topbar__meta">{{user.department}} · {{user.name}}</view>
+    <view class="topbar__title">待我审批</view>
+    <view class="topbar__summary">
+      <view class="summary-item">
+        <text class="summary-item__label">{{summaryLabel}}</text>
+        <text class="summary-item__value">{{totalCount}}项</text>
+      </view>
+      <button class="refresh-button" bindtap="onRefresh" loading="{{isLoading}}">刷新</button>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="mode-tabs">
+      <button
+        class="mode-tab {{item.selected ? 'mode-tab--active' : ''}}"
+        wx:for="{{approvalModes}}"
+        wx:key="value"
+        data-value="{{item.value}}"
+        bindtap="onSelectMode"
+      >
+        {{item.label}}
+      </button>
+    </view>
+
+    <view class="state" wx:if="{{isLoading && approvals.length === 0}}">加载审批项目...</view>
+
+    <view class="state" wx:elif="{{approvals.length === 0}}">
+      <view class="state__title">{{emptyTitle}}</view>
+      <view class="state__text">{{emptyText}}</view>
+    </view>
+
+    <view class="approval-list" wx:else>
+      <view class="hint" wx:if="{{errorText}}">{{errorText}}</view>
+
+      <view class="approval-card" wx:for="{{approvals}}" wx:key="id">
+        <view class="approval-card__head">
+          <view class="approval-card__type">{{item.type}}</view>
+          <view class="approval-card__status approval-card__status--{{item.statusTheme}}">{{item.statusText}}</view>
+        </view>
+
+        <view class="approval-card__title">{{item.title}}</view>
+        <view class="approval-card__company">{{item.company}}</view>
+
+        <view class="approval-card__grid">
+          <view class="info-row">
+            <text class="info-row__label">申请人</text>
+            <text class="info-row__value">{{item.department}} · {{item.applicantName}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-row__label">到访</text>
+            <text class="info-row__value">{{item.visitDate}} {{item.timeText}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-row__label">地点</text>
+            <text class="info-row__value">{{item.place}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-row__label">联系人</text>
+            <text class="info-row__value">{{item.contactName}} · {{item.contactPhone}}</text>
+          </view>
+          <view class="info-row">
+            <text class="info-row__label">人员</text>
+            <text class="info-row__value">{{item.visitorCount}}人 · {{item.staffText}}</text>
+          </view>
+          <view class="info-row" wx:if="{{item.isRecord}}">
+            <text class="info-row__label">审批</text>
+            <text class="info-row__value">{{item.approverText}} · {{item.approvedText}}</text>
+          </view>
+        </view>
+
+        <view class="chips" wx:if="{{item.services.length > 0}}">
+          <text class="chip" wx:for="{{item.services}}" wx:for-item="service" wx:key="*this">{{service}}</text>
+        </view>
+
+        <view class="note" wx:if="{{item.notes}}">{{item.notes}}</view>
+
+        <view class="approval-card__foot">
+          <view class="approval-card__time">{{item.footerTimeText}}</view>
+          <view class="approval-record-tag" wx:if="{{item.isRecord && item.officialReceptionText}}">{{item.officialReceptionText}}</view>
+          <view class="approval-card__actions" wx:if="{{item.canProcess}}">
+            <button
+              class="approval-action approval-action--reject"
+              data-id="{{item.id}}"
+              catchtap="onReject"
+              disabled="{{isProcessing}}"
+            >
+              驳回
+            </button>
+            <button
+              class="approval-action approval-action--approve"
+              data-id="{{item.id}}"
+              catchtap="onApprove"
+              loading="{{processingId === item.id}}"
+              disabled="{{isProcessing && processingId !== item.id}}"
+            >
+              通过
+            </button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

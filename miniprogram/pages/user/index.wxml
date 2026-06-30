@@ -22,7 +22,13 @@
   </view>
 
   <view class="stats">
-    <view class="stat stat--{{item.theme}}" wx:for="{{stats}}" wx:key="label">
+    <view
+      class="stat stat--{{item.theme}}"
+      wx:for="{{stats}}"
+      wx:key="label"
+      bindtap="onTapStat"
+      data-type="{{item.type}}"
+    >
       <view class="stat__label">{{item.label}}</view>
       <view class="stat__main">
         <text class="stat__value">{{item.value}}</text>

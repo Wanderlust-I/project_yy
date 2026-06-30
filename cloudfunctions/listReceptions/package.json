@@ -1,0 +1,9 @@
+{
+  "name": "list-receptions",
+  "version": "1.0.0",
+  "description": "List formal receptions from cloud database.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

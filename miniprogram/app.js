@@ -1,5 +1,6 @@
 const CLOUD_ENV_ID = "zhaodaitest-d7gs08n9v0eb71575";
 const LOGIN_STORAGE_KEY = "wechatLoginInfo";
+const LEGACY_RECEPTION_APPROVAL_KEYS = ["receptionApprovalItems", "latestReceptionApplication"];
 
 function buildCurrentUser(userInfo = {}) {
   const name = userInfo.nickName || "微信用户";
@@ -13,8 +14,16 @@ function buildCurrentUser(userInfo = {}) {
   };
 }
 
+function clearLegacyReceptionApprovalCache() {
+  LEGACY_RECEPTION_APPROVAL_KEYS.forEach((key) => {
+    wx.removeStorageSync(key);
+  });
+}
+
 App({
   onLaunch: function () {
+    clearLegacyReceptionApprovalCache();
+
     this.globalData = {
       appName: "接待管理",
       cloudEnvId: CLOUD_ENV_ID,

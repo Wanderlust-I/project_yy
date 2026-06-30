@@ -1,0 +1,9 @@
+{
+  "name": "approve-reception",
+  "version": "1.0.0",
+  "description": "Approve or reject a reception application.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

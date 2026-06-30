@@ -1,0 +1,9 @@
+{
+  "name": "list-reception-approvals",
+  "version": "1.0.0",
+  "description": "List pending reception applications for approval.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

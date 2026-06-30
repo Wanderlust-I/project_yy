@@ -1,7 +1,33 @@
 const typeOptions = ["商务接待", "项目沟通", "调研交流", "内部协同"];
 const serviceOptions = ["会议室", "茶水", "桌签", "用餐", "车辆", "投影"];
 const placeOptions = ["3911会议室", "线上会议"];
- const defaultServices = ["会议室","茶水"];
+const defaultServices = ["会议室", "茶水"];
+const APPROVAL_STORAGE_KEY = "receptionApplicationApprovalItems";
+const LATEST_RECEPTION_STORAGE_KEY = "latestReceptionApplicationForApproval";
+
+function getReceptionId(item = {}) {
+  return item._id || item.id || "";
+}
+
+function upsertLocalApproval(application) {
+  if (!application) {
+    return;
+  }
+
+  const storedItems = wx.getStorageSync(APPROVAL_STORAGE_KEY);
+  const items = Array.isArray(storedItems) ? storedItems.slice() : [];
+  const applicationId = getReceptionId(application);
+  const existingIndex = items.findIndex((item) => getReceptionId(item) === applicationId);
+
+  if (existingIndex > -1) {
+    items.splice(existingIndex, 1, application);
+  } else {
+    items.unshift(application);
+  }
+
+  wx.setStorageSync(APPROVAL_STORAGE_KEY, items);
+  wx.setStorageSync(LATEST_RECEPTION_STORAGE_KEY, application);
+}
 
 function padNumber(value) {
   return value < 10 ? `0${value}` : `${value}`;
@@ -287,7 +313,7 @@ Page({
           return;
         }
 
-        wx.setStorageSync("latestReceptionApplication", {
+        upsertLocalApproval({
           ...payload,
           _id: result.id,
         });

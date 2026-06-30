@@ -203,6 +203,32 @@ page {
   flex-direction: column;
 }
 
+.state {
+  min-height: 220rpx;
+  padding: 46rpx 28rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+  color: #829192;
+  font-size: 26rpx;
+  line-height: 38rpx;
+  text-align: center;
+  box-shadow: 0 10rpx 24rpx rgba(31, 45, 45, 0.06);
+}
+
+.state__title {
+  color: #1f2d2d;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 42rpx;
+}
+
+.state__text {
+  margin-top: 10rpx;
+  color: #829192;
+  font-size: 25rpx;
+  line-height: 36rpx;
+}
+
 .activity {
   display: flex;
   align-items: stretch;

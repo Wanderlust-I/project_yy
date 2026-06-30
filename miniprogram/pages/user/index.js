@@ -1,3 +1,39 @@
+const APPROVAL_STORAGE_KEY = "receptionApplicationApprovalItems";
+const LATEST_RECEPTION_STORAGE_KEY = "latestReceptionApplicationForApproval";
+
+function getReceptionId(item = {}) {
+  return item._id || item.id || "";
+}
+
+function getLocalPendingApprovals() {
+  const storedItems = wx.getStorageSync(APPROVAL_STORAGE_KEY);
+  const latestItem = wx.getStorageSync(LATEST_RECEPTION_STORAGE_KEY);
+  const sourceItems = Array.isArray(storedItems) ? storedItems.slice() : [];
+
+  if (latestItem && latestItem.status === "pending") {
+    sourceItems.unshift(latestItem);
+  }
+
+  const seenIds = {};
+
+  return sourceItems.filter((item) => {
+    if (!item || item.status !== "pending") {
+      return false;
+    }
+
+    const id = getReceptionId(item);
+    if (id && seenIds[id]) {
+      return false;
+    }
+
+    if (id) {
+      seenIds[id] = true;
+    }
+
+    return true;
+  });
+}
+
 Page({
   data: {
     user: {
@@ -15,13 +51,15 @@ Page({
         unit: "场",
         note: "1场待确认",
         theme: "primary",
+        type: "today",
       },
       {
         label: "待我审批",
-        value: "2",
+        value: "0",
         unit: "项",
-        note: "最晚今日处理",
+        note: "暂无待处理",
         theme: "amber",
+        type: "approval",
       },
       {
         label: "车辆登记",
@@ -29,6 +67,7 @@ Page({
         unit: "辆",
         note: "2辆未到达",
         theme: "coral",
+        type: "vehicle",
       },
       {
         label: "本周归档",
@@ -36,6 +75,7 @@ Page({
         unit: "单",
         note: "费用待补2单",
         theme: "slate",
+        type: "archive",
       },
     ],
     quickActions: [
@@ -135,13 +175,83 @@ Page({
       avatarText: currentUser.name ? currentUser.name.slice(0, 1) : "",
       avatarUrl: currentUser.avatarUrl || "",
     });
+    this.loadApprovalSummary();
+  },
+
+  setApprovalStat(count) {
+    const nextStats = this.data.stats.map((item) => {
+      if (item.type !== "approval") {
+        return item;
+      }
+
+      return {
+        ...item,
+        value: String(count),
+        note: count > 0 ? "点击处理招待申请" : "暂无待处理",
+      };
+    });
+
+    this.setData({
+      stats: nextStats,
+    });
+  },
+
+  loadApprovalSummary() {
+    const localCount = getLocalPendingApprovals().length;
+    this.setApprovalStat(localCount);
+
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      return;
+    }
+
+    wx.cloud.callFunction({
+      name: "listReceptionApprovals",
+      data: {
+        status: "pending",
+        limit: 1,
+        onlyCount: true,
+      },
+      success: (res) => {
+        const result = (res && res.result) || {};
+
+        if (result.success) {
+          this.setApprovalStat(Number(result.total) || 0);
+        }
+      },
+      fail: (err) => {
+        console.warn("listReceptionApprovals summary failed", err);
+      },
+    });
+  },
+
+  onTapStat(e) {
+    const { type } = e.currentTarget.dataset;
+
+    if (type === "approval") {
+      wx.navigateTo({
+        url: "/pages/reception-approval/index",
+      });
+      return;
+    }
+
+    wx.showToast({
+      title: "详情页面将在下一步开发",
+      icon: "none",
+    });
   },
 
   onTapQuickAction(e) {
     const { type } = e.currentTarget.dataset;
     if (type === "create") {
-      wx.navigateTo({
+      wx.switchTab({
         url: "/pages/reception-create/index",
+      });
+      return;
+    }
+
+    if (type === "approval") {
+      wx.navigateTo({
+        url: "/pages/reception-approval/index",
       });
       return;
     }
@@ -149,7 +259,6 @@ Page({
     const actionMap = {
       today: "今日接待列表将在下一步开发",
       vehicle: "车辆登记页面将在下一步开发",
-      approval: "审批中心将在下一步开发",
     };
 
     wx.showToast({

@@ -5,7 +5,7 @@ cloud.init({
 });
 
 const db = cloud.database();
-const COLLECTION_NAME = "receptions";
+const COLLECTION_NAME = "receptionApplications";
 const VALID_TYPES = ["商务接待", "项目沟通", "调研交流", "内部协同"];
 const VALID_SERVICES = ["会议室", "茶水", "桌签", "用餐", "车辆", "投影"];
 
