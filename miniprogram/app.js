@@ -6,11 +6,14 @@ function buildCurrentUser(userInfo = {}) {
   const name = userInfo.nickName || "微信用户";
 
   return {
+    _id: userInfo._id || "",
+    openId: userInfo.openId || "",
     name,
     nickName: name,
     avatarUrl: userInfo.avatarUrl || "",
     department: userInfo.department || "未设置部门",
     role: userInfo.role || "申请人",
+    status: userInfo.status || "active",
   };
 }
 

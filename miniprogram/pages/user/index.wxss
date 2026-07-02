@@ -332,6 +332,63 @@ page {
   flex-shrink: 0;
 }
 
+.admin-entry {
+  margin: 22rpx 24rpx 0;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 18rpx;
+  box-shadow: 0 10rpx 24rpx rgba(31, 45, 45, 0.06);
+}
+
+.admin-entry__icon {
+  width: 58rpx;
+  height: 58rpx;
+  border-radius: 16rpx;
+  background: #e6f1ee;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-entry__shape {
+  width: 28rpx;
+  height: 28rpx;
+  border-radius: 50%;
+  border: 6rpx solid #185c5d;
+  box-sizing: border-box;
+}
+
+.admin-entry__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-entry__title {
+  color: #1f2d2d;
+  font-size: 28rpx;
+  font-weight: 700;
+  line-height: 38rpx;
+}
+
+.admin-entry__desc {
+  margin-top: 6rpx;
+  color: #819091;
+  font-size: 24rpx;
+  line-height: 34rpx;
+}
+
+.admin-entry__action {
+  color: #185c5d;
+  font-size: 26rpx;
+  font-weight: 700;
+  line-height: 36rpx;
+  flex-shrink: 0;
+}
+
 .schedule,
 .todo {
   border-radius: 16rpx;

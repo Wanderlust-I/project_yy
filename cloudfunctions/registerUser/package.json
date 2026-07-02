@@ -1,0 +1,9 @@
+{
+  "name": "register-user",
+  "version": "1.0.0",
+  "description": "Register or update a mini program user in cloud database.",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

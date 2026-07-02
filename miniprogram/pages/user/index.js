@@ -152,6 +152,11 @@ Page({
       text: "浙B车辆待补充车牌，门岗暂未放行",
       action: "去登记",
     },
+    adminEntry: {
+      title: "管理员入口",
+      desc: "用户管理、招待管理",
+      action: "进入",
+    },
   },
 
   onLoad() {
@@ -291,6 +296,12 @@ Page({
     wx.showToast({
       title: "车辆登记页面将在下一步开发",
       icon: "none",
+    });
+  },
+
+  onTapAdminEntry() {
+    wx.navigateTo({
+      url: "/pages/admin/index",
     });
   },
 });

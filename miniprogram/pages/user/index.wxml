@@ -71,6 +71,17 @@
     <view class="notice__action">{{vehicleNotice.action}}</view>
   </view>
 
+  <view class="admin-entry" bindtap="onTapAdminEntry">
+    <view class="admin-entry__icon">
+      <view class="admin-entry__shape"></view>
+    </view>
+    <view class="admin-entry__body">
+      <view class="admin-entry__title">{{adminEntry.title}}</view>
+      <view class="admin-entry__desc">{{adminEntry.desc}}</view>
+    </view>
+    <view class="admin-entry__action">{{adminEntry.action}}</view>
+  </view>
+
   <view class="section">
     <view class="section__head">
       <view class="section__title">今日接待</view>

@@ -1,0 +1,35 @@
+<view class="page">
+  <view class="topbar">
+    <view class="topbar__meta">{{user.department}} · {{user.role}}</view>
+    <view class="topbar__title">管理员</view>
+    <view class="topbar__name">{{user.name}}</view>
+  </view>
+
+  <view class="content">
+    <view class="section">
+      <view class="section__head">
+        <view class="section__title">管理功能</view>
+        <view class="section__extra">2项</view>
+      </view>
+
+      <view class="module-list">
+        <button
+          class="module module--{{item.theme}}"
+          wx:for="{{modules}}"
+          wx:key="type"
+          data-type="{{item.type}}"
+          bindtap="onTapModule"
+        >
+          <view class="module__icon">
+            <view class="module__shape"></view>
+          </view>
+          <view class="module__body">
+            <view class="module__title">{{item.title}}</view>
+            <view class="module__desc">{{item.desc}}</view>
+          </view>
+          <view class="module__arrow">›</view>
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

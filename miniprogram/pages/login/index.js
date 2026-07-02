@@ -63,10 +63,37 @@ Page({
           return;
         }
 
+        this.registerUser(userInfo, loginRes.code);
+      },
+      fail: () => {
+        this.handleLoginError("微信登录失败");
+      },
+    });
+  },
+
+  registerUser(userInfo, loginCode) {
+    if (!wx.cloud || !wx.cloud.callFunction) {
+      this.handleLoginError("请启用云开发");
+      return;
+    }
+
+    wx.cloud.callFunction({
+      name: "registerUser",
+      data: {
+        userInfo,
+      },
+      success: (res) => {
+        const result = (res && res.result) || {};
+
+        if (!result.success || !result.user) {
+          this.handleLoginError(result.message || "用户注册失败");
+          return;
+        }
+
         const app = getApp();
         app.setLoginInfo({
-          userInfo,
-          loginCode: loginRes.code,
+          userInfo: result.user,
+          loginCode,
           authAt: new Date().toISOString(),
         });
 
@@ -78,7 +105,7 @@ Page({
         this.goHome();
       },
       fail: () => {
-        this.handleLoginError("微信登录失败");
+        this.handleLoginError("用户注册失败");
       },
     });
   },

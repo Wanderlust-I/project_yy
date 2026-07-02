@@ -4,6 +4,7 @@
     "pages/index/index",
     "pages/reception-create/index",
     "pages/reception-approval/index",
+    "pages/admin/index",
     "pages/user/index"
   ],
   "window": {
